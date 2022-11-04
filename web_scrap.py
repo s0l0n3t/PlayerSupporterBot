@@ -47,6 +47,12 @@ def main(username_HQ,password_HQ):
                 message_.RAW_WOOD = browser.find_element(By.ID,"wood").text
                 message_.RAW_STONE = browser.find_element(By.ID,"stone").text
                 message_.RAW_IRON = browser.find_element(By.ID,"iron").text
+                #Raw material status
+                message_.PREMIUM_WOOD = browser.find_element(By.ID,"premium_exchange_rate_wood").text
+                message_.PREMIUM_STONE = browser.find_element(By.ID,"premium_exchange_rate_stone").text
+                message_.PREMIUM_IRON = browser.find_element(By.ID,"premium_exchange_rate_iron").text
+                #Premium status
+
                 if (int(wood_stock.text[0:3]) <= 200 or int(stone_stock.text[0:3]) <= 200 or int(iron_stock.text[0:3]) <= 200):
                         
                         message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Wood %s'%(wood_stock.text))
