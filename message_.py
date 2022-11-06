@@ -4,7 +4,8 @@ import telegram
 from telegram.ext import Updater,CommandHandler,MessageHandler,Filters
 
 COMMANDS ="""/start start the bot !  
-/status Check avaible raw materials"""
+/status Check avaible raw materials
+/premium bazaar economics"""
 RAW_WOOD=""
 RAW_STONE=""
 RAW_IRON=""
@@ -12,6 +13,8 @@ BOT_TOKEN = "YOUR TOKEN"
 PREMIUM_WOOD=""
 PREMIUM_STONE=""
 PREMIUM_IRON=""
+USER=""
+WORLD=""
 
 
 
@@ -21,17 +24,21 @@ def Message_start(update,context):
     #type "/start" for this function.
 
 def Message_premium_exchange(update,context):
-    update.message.reply_text("\nPremium information \nWood: %s \n Stone: %s \n Iron: %s"%(PREMIUM_WOOD,PREMIUM_STONE,PREMIUM_IRON))
+    update.message.reply_text("\nPremium information \nWood: %s \n Stone: %s \n Iron: %s"%(PREMIUM_WOOD.text,PREMIUM_STONE.text,PREMIUM_IRON.text))
     #Premium raw material excange status.
 
 def Message_raw_materials(update,context):
-    update.message.reply_text('Wood:%s Stone:%s Iron:%s'%(RAW_WOOD,RAW_STONE,RAW_IRON))
+    update.message.reply_text('\nAvaible raw material\nWood:%s \nStone:%s \nIron:%s'%(RAW_WOOD.text,RAW_STONE.text,RAW_IRON.text))
     #raw information for  /status
+
+def Message_sell_raw_materials(update,context):
+    update.message.reply_text('Selling avaible materials')
+    #selling raw materials
 
 def Message_help(update,context):
     update.message.reply_text(COMMANDS)
 
-def main():
+def Active():
     global mytelegram_id
     global token_updater
     token_updater = Updater(BOT_TOKEN,use_context=True)
@@ -40,6 +47,7 @@ def main():
     dp.add_handler(CommandHandler("status",Message_raw_materials))
     dp.add_handler(CommandHandler("help",Message_help))
     dp.add_handler(CommandHandler("premium",Message_premium_exchange))
+    dp.add_handler(CommandHandler("sell",Message_sell_raw_materials))
     token_updater.start_polling()
     mytelegram_id ="338442260" #@userinfobot id
 

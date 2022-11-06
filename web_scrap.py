@@ -11,10 +11,12 @@ import message_
 
 USER_ID = input()
 USER_PASS = input()
+REPORT_COUNT=""
+
 
 def main(username_HQ,password_HQ):
     try:
-        message_.main()     
+        message_.Active()     
 #browser = webdriver.Edge(executable_path='msedgedriver.exe') use if you dont have driver
         browser = webdriver.Edge()
 #//*[@id="login_form"]/div/div/a
@@ -37,28 +39,29 @@ def main(username_HQ,password_HQ):
        # premium_exchange = browser.find_element(By.XPATH,"//*[@id='id_exchange']/td/a")
         # premium_exchange.click()
         premium_exchange_clickable = WebDriverWait(browser,500).until(EC.presence_of_element_located((By.XPATH,"//*[@id='id_exchange']/td/a"))).click()
-        wood_stock = browser.find_element(By.ID,"premium_exchange_rate_wood")
-        time.sleep(1)
-        stone_stock = browser.find_element(By.ID,"premium_exchange_rate_stone")
-        time.sleep(1)
-        iron_stock = browser.find_element(By.ID,"premium_exchange_rate_iron")
-        
-        while(True):
-                message_.RAW_WOOD = browser.find_element(By.ID,"wood").text
-                message_.RAW_STONE = browser.find_element(By.ID,"stone").text
-                message_.RAW_IRON = browser.find_element(By.ID,"iron").text
-                #Raw material status
-                message_.PREMIUM_WOOD = browser.find_element(By.ID,"premium_exchange_rate_wood").text
-                message_.PREMIUM_STONE = browser.find_element(By.ID,"premium_exchange_rate_stone").text
-                message_.PREMIUM_IRON = browser.find_element(By.ID,"premium_exchange_rate_iron").text
-                #Premium status
+        message_.PREMIUM_WOOD = browser.find_element(By.ID,"premium_exchange_rate_wood")
+        message_.PREMIUM_STONE = browser.find_element(By.ID,"premium_exchange_rate_stone")
+        message_.PREMIUM_IRON = browser.find_element(By.ID,"premium_exchange_rate_iron")
+        message_.RAW_WOOD = browser.find_element(By.ID,"wood")
+        message_.RAW_STONE = browser.find_element(By.ID,"stone")
+        message_.RAW_IRON = browser.find_element(By.ID,"iron")
+        REPORT_COUNT=browser.find_element(By.ID,"menu_report_count").text.replace("(","")
+        REPORT_COUNT=REPORT_COUNT.replace(")","")
 
-                if (int(wood_stock.text[0:3]) <= 200 or int(stone_stock.text[0:3]) <= 200 or int(iron_stock.text[0:3]) <= 200):
+        while(True):
+                
+
+                if(int(message_.PREMIUM_WOOD.text[0:3]) <= 200 or int(message_.PREMIUM_STONE.text[0:3]) <= 200 or int(message_.PREMIUM_IRON.text[0:3]) <= 200):
                         
-                        message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Wood %s'%(wood_stock.text))
-                        message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Stone %s'%(stone_stock.text))
-                        message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Iron %s'%(iron_stock.text))
+                        message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Wood %s'%(message_.PREMIUM_WOOD.text))
+                        message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Stone %s'%(message_.PREMIUM_STONE.text))
+                        message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text='Iron %s'%(message_.PREMIUM_IRON.text))
                         time.sleep(5)
+                elif (int(REPORT_COUNT) > 0):
+                         message_.token_updater.dispatcher.bot.send_message(chat_id=message_.mytelegram_id,text="\nReport Count: %s"%(REPORT_COUNT))
+                         time.sleep(5)
+                else:
+                        pass
                 #Do not return to main()
        
       #  browser.close()
