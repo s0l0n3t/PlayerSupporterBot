@@ -9,7 +9,7 @@
  * `04.11.2022`  telegram and software integration is done.
 
 
- ### Using
+ ## Using
 
  * `/status`  Shows avaible raw materials.
 
@@ -18,9 +18,13 @@
  * `/help`    How to use that software.
 
 
-### Features
+## Features
 
 * Software shows raw material transaction between premium and materials.
 
 * Avaible raw materials visiable with once command.
- 
+
+ ## Includes
+ * Python 3.10.9
+ * Selenium 4.7.0
+ * Telegram 6.4 (library)
